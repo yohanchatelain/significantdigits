@@ -8,7 +8,13 @@
   <img src="assets/logo-compact.png" alt="significantdigits logo" width="500">
 </p>
 
-Compute the number of significant digits based on the paper [Confidence Intervals for Stochastic Arithmetic](https://arxiv.org/abs/1807.09655).
+<p align="center">
+  <a href="https://pypi.org/project/significantdigits/"><img src="https://img.shields.io/pypi/v/significantdigits.svg" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/significantdigits/"><img src="https://img.shields.io/pypi/pyversions/significantdigits.svg" alt="Python versions"></a>
+  <a href="https://doi.org/10.5281/zenodo.21362284"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21362284.svg" alt="DOI"></a>
+</p>
+
+Compute the number of significant digits based on the paper [Confidence Intervals for Stochastic Arithmetic](https://dl.acm.org/doi/10.1145/3432184) (also available as a free preprint on [arXiv](https://arxiv.org/abs/1807.09655)).
 This package is also inspired by the [Jupyter Notebook](https://github.com/interflop/stochastic-confidence-intervals/blob/master/Intervals.ipynb) included with the publication.
 
 
@@ -37,6 +43,7 @@ This package is also inspired by the [Jupyter Notebook](https://github.com/inter
     - [Test Categories](#test-categories)
     - [Mathematical Properties Tested](#mathematical-properties-tested)
     - [License](#license)
+  - [Citation](#citation)
 
 ## Getting started
 
@@ -493,6 +500,26 @@ This file is part of the Verificarlo project,
 under the Apache License v2.0 with LLVM Exceptions.
 SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception.
 See https://llvm.org/LICENSE.txt for license information.
+
+## Citation
+
+If you use `significantdigits` in your research, please cite it using the metadata in
+[`CITATION.cff`](./CITATION.cff) (also available via GitHub's "Cite this repository" button),
+or reference the underlying methodology directly:
+
+```bibtex
+@article{sohier2021confidence,
+  title={Confidence Intervals for Stochastic Arithmetic},
+  author={Sohier, Devan and de Oliveira Castro, Pablo and F{\'e}votte, Fran{\c{c}}ois and Lathuili{\`e}re, Bruno and Petit, Eric and Jamond, Olivier},
+  journal={ACM Transactions on Mathematical Software},
+  volume={47},
+  number={2},
+  pages={1--33},
+  year={2021},
+  publisher={ACM},
+  doi={10.1145/3432184}
+}
+```
 
 Copyright (c) 2020-2026 Verificarlo Contributors
 
