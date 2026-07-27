@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-`significantdigits` (v0.4.0) is a scientific Python library that computes the number of **significant digits** (or bits) of precision in floating-point computational results. It implements the statistical methodology from the paper [Confidence Intervals for Stochastic Arithmetic](https://arxiv.org/abs/1807.09655).
+`significantdigits` (v0.4.0) is a scientific Python library that computes the number of **significant digits** (or bits) of precision in floating-point computational results. It implements the statistical methodology from the paper [Confidence Intervals for Stochastic Arithmetic](https://dl.acm.org/doi/10.1145/3432184).
 
 **Two core metrics:**
 - **Significant digits** — bits/digits accurate in a result relative to a reference
