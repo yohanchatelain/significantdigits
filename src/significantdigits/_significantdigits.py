@@ -83,7 +83,7 @@ class Metric(AutoName):
         if isinstance(error, cls):
             return error == cls.Significant
         if isinstance(error, str):
-            return error.lower() == cls.Significant.name
+            return error.lower() == cls.Significant.name.lower()
 
     @classmethod
     def is_contributing(cls, error):
@@ -91,7 +91,7 @@ class Metric(AutoName):
         if isinstance(error, cls):
             return error == cls.Contributing
         if isinstance(error, str):
-            return error.lower() == cls.Contributing.name
+            return error.lower() == cls.Contributing.name.lower()
 
 
 class Method(AutoName):
@@ -113,7 +113,7 @@ class Method(AutoName):
         if isinstance(error, cls):
             return error == cls.CNH
         if isinstance(error, str):
-            return error.lower() == cls.CNH.name
+            return error.lower() == cls.CNH.name.lower()
 
     @classmethod
     def is_general(cls, error):
@@ -121,7 +121,7 @@ class Method(AutoName):
         if isinstance(error, cls):
             return error == cls.General
         if isinstance(error, str):
-            return error.lower() == cls.General.name
+            return error.lower() == cls.General.name.lower()
 
 
 class Error(AutoName):
@@ -150,7 +150,7 @@ class Error(AutoName):
         if isinstance(error, cls):
             return error == cls.Absolute
         if isinstance(error, str):
-            return error.lower() == cls.Absolute.name
+            return error.lower() == cls.Absolute.name.lower()
 
     @classmethod
     def is_relative(cls, error):
@@ -158,7 +158,7 @@ class Error(AutoName):
         if isinstance(error, cls):
             return error == cls.Relative
         if isinstance(error, str):
-            return error.lower() == cls.Relative.name
+            return error.lower() == cls.Relative.name.lower()
 
 
 @typing.overload
@@ -299,6 +299,13 @@ def _substract_along_axis(x, y, axis):
     return _operator_along_axis(xp.subtract, x, y, axis)
 
 
+def _shuffle_along_axis(array: InternalArrayType, axis: int) -> InternalArrayType:
+    """Return a shuffled copy of an array along ``axis``."""
+    xp = _get_array_module(array)
+    indices = xp.random.permutation(array.shape[axis])
+    return xp.take(array, indices, axis=axis)
+
+
 def _get_significant_size(
     z: InternalArrayType, dtype: Optional[npt.DTypeLike] = None
 ) -> int:
@@ -423,7 +430,7 @@ def _compute_z(
             raise SignificantDigitsException(error_msg)
         nb_samples //= 2
         if shuffle_samples:
-            xp.random.shuffle(array)
+            array = _shuffle_along_axis(array, axis)
         x, y = xp.split(array, 2, axis=axis)
     elif reference.ndim == array.ndim:
         # X and Y have the same dimension
@@ -432,8 +439,8 @@ def _compute_z(
         x = array
         y = reference
         if shuffle_samples:
-            xp.random.shuffle(x)
-            xp.random.shuffle(y)
+            x = _shuffle_along_axis(x, axis)
+            y = _shuffle_along_axis(y, axis)
     elif reference.ndim == array.ndim - 1:
         # Y has one less dimension than X
         # Y is a constant
@@ -625,7 +632,7 @@ def _significant_digits_general(
         if _VERBOSE_MODE:
             ic(kth, threshold, successes, significant, mask)
 
-        if not mask.all().item():
+        if not mask.any().item():
             break
 
     return significant
@@ -726,7 +733,7 @@ def significant_digits(
 
     preproc_array, preproc_reference = _preprocess_inputs(array, reference)
 
-    if method == Method.CNH:
+    if Method.is_cnh(method):
         significant = _significant_digits_cnh(
             array=preproc_array,
             reference=preproc_reference,
@@ -738,7 +745,7 @@ def significant_digits(
             dtype=dtype,
         )
 
-    elif method == Method.General:
+    elif Method.is_general(method):
         significant = _significant_digits_general(
             array=preproc_array,
             reference=preproc_reference,
@@ -912,7 +919,7 @@ def _contributing_digits_general(
         mask = xp.logical_and(mask, successes)
         contributing = xp.where(mask, k, contributing)
 
-        if not mask.all().item():
+        if not mask.any().item():
             break
 
     return contributing
@@ -1013,7 +1020,7 @@ def contributing_digits(
 
     array, reference = _preprocess_inputs(array, reference)
 
-    if method == Method.CNH:
+    if Method.is_cnh(method):
         contributing = _contributing_digits_cnh(
             array=array,
             reference=reference,
@@ -1025,7 +1032,7 @@ def contributing_digits(
             dtype=dtype,
         )
 
-    elif method == Method.General:
+    elif Method.is_general(method):
         contributing = _contributing_digits_general(
             array=array,
             reference=reference,
