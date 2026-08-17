@@ -2,7 +2,7 @@
   <img src="assets/logo-text.png" alt="significantdigits logo" width="500">
 </p>
 
-# significantdigits package - v0.5.0
+# significantdigits package - v0.5.1
 
 <p align="center">
   <img src="assets/logo-compact.png" alt="significantdigits logo" width="500">
@@ -21,7 +21,7 @@ This package is also inspired by the [Jupyter Notebook](https://github.com/inter
 
 ## Table of Contents
 
-- [significantdigits package - v0.5.0](#significantdigits-package---v050)
+- [significantdigits package - v0.5.1](#significantdigits-package---v051)
   - [Table of Contents](#table-of-contents)
   - [Getting started](#getting-started)
   - [Installation](#installation)
