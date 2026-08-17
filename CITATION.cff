@@ -15,18 +15,15 @@ authors:
     given-names: Aurélien
     email: a.delval87@gmail.com
 version: 0.5.1
-date-released: "2026-08-15"
+date-released: "2026-08-17"
 license: Apache-2.0
 repository-code: "https://github.com/verificarlo/significantdigits"
 url: "https://github.com/verificarlo/significantdigits"
-doi: 10.5281/zenodo.21362285
+doi: 10.5281/zenodo.21362284
 identifiers:
   - type: doi
     value: 10.5281/zenodo.21362284
     description: "The concept DOI representing all versions of significantdigits"
-  - type: doi
-    value: 10.5281/zenodo.21362285
-    description: "The DOI for version 0.5.0 of significantdigits"
 keywords:
   - floating-point
   - numerical-analysis
