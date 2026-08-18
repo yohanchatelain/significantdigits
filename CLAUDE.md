@@ -64,7 +64,7 @@ pip install . -r requirements.txt
 
 **Dev/doc dependencies:** `pytest>=6.2.5`, `pdoc>=14.2.0`, `flake8`
 
-**Python versions supported:** 3.8 – 3.12
+**Python versions supported:** 3.10 – 3.12
 
 ---
 
@@ -319,7 +319,7 @@ The CLI entry point is `significantdigits.__main__:main`, registered via `pyproj
 
 | Workflow | Trigger | Actions |
 |---|---|---|
-| `python-app.yml` | Push/PR to `main` | flake8 lint + pytest on Python 3.8–3.12 |
+| `python-app.yml` | Push/PR to `main` | flake8 lint + pytest on Python 3.10–3.12 |
 | `python-publish.yml` | Release published | Build wheel, publish to PyPI |
 | `docs.yml` | Push to `main` | pdoc build + deploy to GitHub Pages |
 
