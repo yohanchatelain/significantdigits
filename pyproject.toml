@@ -24,19 +24,13 @@ classifiers = [
     "Development Status :: 4 - Beta",
 ]
 license = { file = "LICENSE" }
+# Only what `import significantdigits` actually needs. The test and docs
+# tooling lives in the dev dependency-group below so it is not imposed as a
+# runtime constraint on downstream users.
 dependencies = [
-    "attrs>=21.2.0",
-    "iniconfig>=1.1.1",
-    "numpy>=1.22.0",
-    "packaging>=21.2",
-    "pluggy>=1.0.0",
-    "py>=1.10.0",
-    "pyparsing>=2.4.7",
-    "pytest>=6.2.5",
-    "scipy>=1.7.3",
-    "toml>=0.10.2",
     "icecream>=2.1.3",
-    "pdoc>=14.2.0",
+    "numpy>=1.22.0",
+    "scipy>=1.7.3",
 ]
 
 [project.optional-dependencies]
@@ -45,6 +39,12 @@ dependencies = [
 gpu = ["cupy-cuda12x>=12.0"]
 gpu-cuda12x = ["cupy-cuda12x>=12.0"]
 gpu-cuda11x = ["cupy-cuda11x>=12.0"]
+
+[dependency-groups]
+dev = [
+    "pdoc>=14.2.0",
+    "pytest>=6.2.5",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/significantdigits"]
