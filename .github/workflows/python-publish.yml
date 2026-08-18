@@ -11,8 +11,15 @@ name: Upload Python Package
 on:
   release:
     types: [published]
-  # Allows re-publishing the current version manually if a release run failed.
+  # Allows retrying a release run that failed before the upload step. PyPI
+  # rejects re-uploads of an existing version, so this cannot replace an
+  # artifact that already published.
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Tag or ref to build from (e.g. v0.5.1). Defaults to the ref this run was started from."
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -24,6 +31,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        # Without this a manual run builds branch HEAD rather than the tag.
+        ref: ${{ inputs.ref || github.ref }}
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -35,8 +45,8 @@ jobs:
     - name: Build package
       run: python -m build
     - name: Publish package
-      # v1.14.2 — older pins ship a twine too old to read Metadata-Version 2.5
-      uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+      # Older pins ship a twine too old to read Metadata-Version 2.5.
+      uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
