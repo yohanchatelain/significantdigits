@@ -2,7 +2,7 @@
   <img src="assets/logo-text.png" alt="significantdigits logo" width="500">
 </p>
 
-# significantdigits package - v0.5.1
+# significantdigits package - v0.6.0
 
 <p align="center">
   <img src="assets/logo-compact.png" alt="significantdigits logo" width="500">
@@ -24,7 +24,7 @@ This package is also inspired by the [Jupyter Notebook](https://github.com/inter
 
 ## Table of Contents
 
-- [significantdigits package - v0.5.1](#significantdigits-package---v051)
+- [significantdigits package - v0.6.0](#significantdigits-package---v060)
   - [Table of Contents](#table-of-contents)
   - [Getting started](#getting-started)
   - [Installation](#installation)
@@ -496,6 +496,13 @@ minimum_number_of_trials(probability: float, confidence: float) -> int
 ```
 
 ## Recent Improvements
+
+**v0.6.0:**
+- Dropped support for Python 3.8 and 3.9 (minimum required version is now Python 3.10)
+- Adopted `uv` for reproducible environment locking and modern dependency management
+- Cleaned up runtime dependencies to only core packages (`numpy`, `scipy`, `icecream`)
+- Added automated dependency updates via Dependabot
+- Enhanced release publishing workflow with configurable target ref
 
 **v0.5.1:**
 - Fixed early termination of the General-method estimator, which stopped before

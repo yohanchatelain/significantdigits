@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "Tag or ref to build from (e.g. v0.5.1). Defaults to the ref this run was started from."
+        description: "Tag or ref to build from (e.g. v0.6.0). Defaults to the ref this run was started from."
         required: false
         type: string
 
