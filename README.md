@@ -63,7 +63,7 @@ of a results sample with a given known reference:
 >>> # simulates results with epsilon differences
 >>> X = [1+U(-1,1)*eps for _ in range(10)]
 >>> sd.significant_digits(X, reference=1)
->>> 51.48272220711583
+array(51.48272221)
 ```
 
 or with the CLI interface assuming `X` is in `test.txt`:
@@ -77,14 +77,14 @@ If the reference is unknown, one can use the sample average:
 ```python
 ...
 >>> sd.significant_digits(X, reference=np.mean(X))
->>> 51.48272220711583
+array(51.48272221)
 ```
 
 To print the result as mean +/- error, use the format_uncertainty function:
 
 ```python
 >>> print(sd.format_uncertainty(X, reference=1))
->>> ['+1.00000000000000000 ± 1.119313369151395181e-16'
+['+1.00000000000000000 ± 1.119313369151395181e-16'
      '+1.00000000000000000 ± 1.119313369151395181e-16'
      '+1.00000000000000000 ± 1.119313369151395181e-16'
      '+1.00000000000000000 ± 1.119313369151395181e-16'
@@ -132,8 +132,10 @@ Usage is identical to the NumPy case; only the array type changes:
 >>> X = 1 + cp.random.uniform(-1, 1, 10) * eps
 >>> s = sd.significant_digits(X, reference=1)  # runs on the GPU
 >>> s.get()  # transfer back to the host
-array(51.48272221)
 ```
+
+CuPy draws from a different random stream than NumPy, so the value will be
+around 51 bits but will not match the NumPy example digit for digit.
 
 Mixing inputs is supported: if the array is on the GPU and the reference is a
 NumPy array or scalar, the reference is transferred to the GPU automatically.

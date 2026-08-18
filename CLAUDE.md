@@ -31,7 +31,7 @@ significantdigits/
 │   └── export/                     # I/O handling
 │       ├── stdin.py                # Parse/export Python literals and text
 │       └── numpy.py                # .npy binary file support
-├── tests/                          # 153 tests across 15 files
+├── tests/                          # 213 tests across 15 files
 │   ├── conftest.py                 # Fixtures, custom CLI options, test helpers
 │   ├── utils.py                    # Singleton, Setup for output dirs/paths
 │   └── test_*.py                   # Test modules (see Test Suite section)
@@ -49,20 +49,23 @@ significantdigits/
 ## Development Setup
 
 ```bash
-# Install in editable mode with all dependencies
-pip install -e .
+# What CI does: create the venv and install from the committed lockfile.
+# --locked fails if uv.lock is stale with respect to pyproject.toml.
+uv sync --locked
 
-# Or compile requirements from pyproject.toml (matches CI)
-pip install pip-tools
-python -m piptools compile -o requirements.txt pyproject.toml
-pip install . -r requirements.txt
+# After changing dependencies in pyproject.toml, re-lock and commit uv.lock,
+# or CI will fail on --locked.
+uv lock
+
+# Plain pip also works for a quick editable install, but does not use the lock.
+pip install -e .
 ```
 
-**Runtime dependencies:** `numpy>=1.22.0`, `scipy>=1.7.3`, `attrs>=21.2.0`, `icecream>=2.1.3`
+**Runtime dependencies:** `numpy>=1.22.0`, `scipy>=1.7.3`, `icecream>=2.1.3`
 
 **Optional dependencies:** `cupy` for the GPU backend (extras: `gpu`, `gpu-cuda12x`, `gpu-cuda11x`)
 
-**Dev/doc dependencies:** `pytest>=6.2.5`, `pdoc>=14.2.0`, `flake8`
+**Dev/doc dependencies:** the `dev` dependency-group (`pytest>=6.2.5`, `pdoc>=14.2.0`), installed by default by `uv sync`. flake8 is run via `uvx` and is not a declared dependency.
 
 **Python versions supported:** 3.10 – 3.12
 
@@ -312,6 +315,7 @@ The CLI entry point is `significantdigits.__main__:main`, registered via `pyproj
 | `test_scaling_factor.py` | — | Scaling factor computation |
 | `test_gpu.py` | `gpu` | CuPy GPU backend and dispatch |
 | `test_print_digits.py` | — | Output formatting |
+| `test_regressions.py` | — | Correctness and input-handling bug regressions |
 
 ---
 
